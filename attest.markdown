@@ -111,9 +111,16 @@ following output:
 
 ![Successful test run](img/attest1.png "Successful test run")
 
+A dash (`-`) instead of `PASS` means no assertions were run in that scope.  That
+is, the "tests" _Date_ and _day, month, year, week, day-of-year, etc._ are just
+containers to group related tests.
+
 Changing two lines of the test code in order to force test failures, we get:
 
 ![Unsuccessful test run](img/attest2.png "Unsuccessful test run")
+
+In both these cases, the error is in the testing code, not the tested code.
+Nonetheless, it serves to demonstrate the kind of output Attest produces.
 
 
 ## Assertion methods
@@ -628,7 +635,7 @@ made their way from Dfect's manual into this one, too.
 ## Dependencies and requirements
 
 Dependencies (automatically resolved by RubyGems):
-* `col` for coloured console output (which depends on `term/ansi-color`
+* `col` for coloured console output (which depends on `term/ansi-color`)
 * `differ` for highlighting difference between strings
 
 Attest was developed using the following version of Ruby.  I have no knowledge
