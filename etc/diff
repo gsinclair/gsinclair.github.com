@@ -1,0 +1,5 @@
+diff col.markdown ../col/doc/col.markdown
+echo
+echo --------
+echo
+diff attest.markdown ../attest/doc/attest.markdown

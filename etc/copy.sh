@@ -1,2 +1,2 @@
 cp ../attest/doc/attest.markdown .
-cp ../col/README.markdown col.markdown
+cp ../col/doc/col.markdown .

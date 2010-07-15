@@ -5,6 +5,8 @@ title: Col
 
 # Col
 
+**Status: awaiting release (July 2010)**
+
 * This list will contain the table of contents
 {:toc}
 
@@ -14,11 +16,12 @@ Col -- high-level console color formatting
 
 ## Synopsis
 
+{% highlight ruby %}
     require 'col'
 
     puts Col("Hello world!").red.bold
     puts Col("Hello world!").rb
-    puts Col("Hello world!").fmt :red, :bold
+    puts Col("Hello world!").fmt [:red, :bold]
     puts Col("Hello world!").fmt :rb
 
     puts Col("Hello ", "world!").fmt :red, :green
@@ -33,12 +36,21 @@ Col -- high-level console color formatting
     puts Col("Hello ", "world!").fmt [:blue, :on_yellow], [:on_green]
     puts Col("Hello ", "world!").fmt "b_oy,__og"
 
+    puts Col.inline( "Hello ", :red, "world!", :blue )
+
+    puts Col.inline(
+      "Hello ",   [:red, :bold, :on_white],
+      "world!",   :b_oy
+    )
+
+{% endhighlight %}
+
 
 ## Installation
 
     $ [sudo] gem install col
 
-Source-code access is via Github.  See 
+Source-code access is via Github.  See [Project details](#project_details).
 
 ## Description
 
@@ -47,8 +59,13 @@ the console.  It is optimised for dealing with multiple strings at once,
 applying different color formatting to each string.  It does not add any methods
 to the String class.
 
+For simple console-coloring requirements, there is little or nothing to be
+gained from using Col instead of Term::ANSIColor.
+
 If formatting a single string, you can send the method names directly, or use
 their abbreviation if applicable:
+
+{% highlight ruby %}
 
     puts Col("Hello world!").red.bold.on_white
     puts Col("Hello world!").rbow
@@ -56,7 +73,11 @@ their abbreviation if applicable:
     puts Col("Hello world!").bold.italic.strikethrough
     # No abbreviation for this
 
+{% endhighlight %}
+
 If formatting multiple strings, you are limited to using the `fmt` method.
+
+{% highlight ruby %}
 
     puts Col("Hello ", "world!").fmt [:red, :bold], [:green, :bold]
     puts Col("Hello ", "world!").fmt :rb, :gb
@@ -64,6 +85,7 @@ If formatting multiple strings, you are limited to using the `fmt` method.
 
     puts Col("Hello ", "world!").fmt [:italic, :underline], [:green, :on_white]
     # No abbreviation for [:italic, :underline]
+{% endhighlight %}
 
 Abbreviations are available if the format you wish to use comprises:
 * at most one foreground color
@@ -75,37 +97,59 @@ See [Abbreviations](#abbreviations) below for details.
 
 ### Classes, methods, return values
 
-`Col(...)` and `Col\[...]` create a `Col` object, whose only interesting methods are
+`Col(...)` and `Col[...]` create a `Col` object, whose only interesting methods are
 `fmt` (to apply formatting) and `to_s`.  Any other method will be interpreted as
 a format specifier.
 
 `Col#fmt` returns a `String`:
 
+{% highlight ruby %}
+
     Col("string").fmt :red, :bold, :on_white    # -> String
     Col("string").fmt "rbow"                    # -> String
     Col("string").fmt :rbow                     # -> String
+    Col("str1", "str2").fmt :rb, gi             # -> String
+
+{% endhighlight %}
 
 Directly-applied formatting methods return a `Col` object:
+
+{% highlight ruby %}
 
     Col("string").red                           # -> Col
     Col("string").red.bold                      # -> Col
     Col("string").red.bold.underscore.italic    # -> Col
 
-Because `Col#to_s` is implemented, you can use `puts` directly:
+{% endhighlight %}
+
+Because `Col#to_s` is implemented, you can use `puts` directly on a `Col`
+object:
+
+{% highlight ruby %}
 
     puts Col("string").red.bold
 
+{% endhighlight %}
+
 Directly-applied _abbreviated_ formatting methods return a `String`:
+
+{% highlight ruby %}
 
     Col("string").rbow                          # -> String
       # internally converted to
       #   Col("string).fmt :red, :bold, :on_white
 
+{% endhighlight %}
+
 Incorrect use of Col results in a `Col::Error` being raised:
+
+{% highlight ruby %}
 
     Col("string").turquoise                    # non-existent format
     Col("one", "two).fmt :red, :green, :cyan   # too many arguments
     Col("string").gZow                         # invalid style: Z
+
+{% endhighlight %}
 
 ### Abbreviations
 
@@ -126,6 +170,8 @@ specify `on_white`, you must use underscores for the color and style properties.
 Using these abbreviations, you can apply at most one color, at most one style,
 and at most one background color.  These are listed in full here:
 
+{% highlight ruby %}
+
     COLORS = {              STYLES = {                    BACKGROUND = {        
       'B' => :black,          'b' => :bold,                 'oB' => :on_black,  
       'r' => :red,            'd' => :dark,                 'or' => :on_red,    
@@ -138,6 +184,8 @@ and at most one background color.  These are listed in full here:
     }                         'c' => :concealed,          }                     
                               's' => :strikethrough,
                             }                       
+
+{% endhighlight %}
     
 Note the following solutions to abbreviation clashes:
 
@@ -152,19 +200,31 @@ is optimised for the common case of applying a single color, a single style and
 a background color.  If you need to apply more than one style to a single
 string, you can send them all as methods:
 
+{% highlight ruby %}
+
     Col("text...").rapid_blink.strikethrough.negative.cyan
+
+{% endhighlight %}
 
 Or you can pass all of them, in full, to the `fmt` method.
 
+{% highlight ruby %}
+
     Col("text...").fmt [:rapid_blink, :strikethrough, :negative, :cyan]
 
+{% endhighlight %}
+
 If you are using `Col` to format a number of strings, `fmt` is your only option.
+
+{% highlight ruby %}
 
     Col("one", "two", "three").fmt(
       [:green, :bold, :underline, :italic, :on_yellow],
       [:blue, :strikethrough, :dark, :blink],
       [:red]
     )
+
+{% endhighlight %}
 
 Naturally, the need for such usage should be extremely rare!
 
@@ -173,9 +233,15 @@ Naturally, the need for such usage should be extremely rare!
 Assuming your formatting needs are straightforward, the most convenient way to
 format multiple strings is with a comma-separated format specification.
 
+{% highlight ruby %}
+
     puts Col(str1, str2, ...).fmt "f1,f2,..."
 
-For example
+{% endhighlight %}
+
+For example:
+
+{% highlight ruby %}
 
     puts Col("Name: ", name, "Age: ", age).fmt "y,rb,y,rb"
 
@@ -183,20 +249,53 @@ For example
     puts Col("Name: ",  name,           "Age: ",   age           ).fmt \
              :yellow,   [:red, :bold],  :yellow,   [:red, :bold]
 
+{% endhighlight %}
+
 An alternative is to provide a list of strings or symbols:
+
+{% highlight ruby %}
 
     puts Col("Name: ", name, "Age: ", age).fmt('y', 'rb', 'y', 'rb')
     puts Col("Name: ", name, "Age: ", age).fmt(:y, :rb, :y, :rb)
 
+{% endhighlight %}
+
+### Inline usage
+
+An alternative way to format multiple strings is to use `Col.inline`.
+
+{% highlight ruby %}
+
+    Col.inline( str1, fmt1, str2, fmt2, ... )
+
+{% endhighlight %}
+
+For example:
+
+{% highlight ruby %}
+
+    puts Col.inline( "Hello ", :red, "world!", :blue)
+
+    puts Col.inline(
+      "Hello ",   [:red, :bold, :on_white],
+      "world!",   :b_oy
+    )
+
+{% endhighlight %}
+
 
 ## Limitations
 
-Col uses [`term/ansicolor`][1] to access ANSI codes, and offers access to all of
+Col uses [Term::ANSIColor][1] to access ANSI codes, and offers access to all of
 its codes/features _except_ `reset` and `uncolored`.  There is no way to uncolor
 a string using Col; there should be no need to!  Nonetheless, by using Col you
-are indirectly using `term/ansicolor` and can therefore include code like
+are indirectly using Term::ANSIColor and can therefore include code like
+
+{% highlight ruby %}
 
     str = Term::ANSIColor.uncolored(str)
+
+{% endhighlight %}
 
 [1]: http://flori.github.com/term-ansicolor/
 
@@ -211,32 +310,33 @@ environment has been tested!
 
 ### Credits
 
-Florian Flank for [`term/ansicolor`][1], which I've used heavily over the years.
+Florian Flank for [Term::ANSIColor][1], which I've used heavily over the years.
 
 ### Motivation
 
-I've used `term/ansicolor` many times and never sought anything more, but while
+I've used Term::ANSIColor many times and never sought anything more, but while
 developing Attest, which makes much use of console color, I wanted an easier way
 to apply color codes to groups of strings.  Additionally, being a unit testing
 library, I didn't want to add methods to the String class, the way I normally do
-when using `term/ansicolor`.
+when using Term::ANSIColor.
 
 ### Project details
 
-* Author: Gavin Sinclair (user name: gsinclair; mail server: gmail.com)
+* Author: Gavin Sinclair (user name: `gsinclair`; mail server: `gmail.com`)
 * Date: July 2010
 * Licence: MIT licence
-* Project page: [http://github.com/gsinclair/col][pr]
-* Documentation:
-  * [http://gsinclair.github.com/col.html][d1] or
-  * [http://github.com/gsinclair/col#README][d2]
+* Project homepage: [http://gsinclair.github.com/col.html][home]
+* Source code: [http://github.com/gsinclair/col][code]
+* Documentation: project homepage or README on the Github page
 
-[pr]: http://github.com/gsinclair/col
-[d1]: http://gsinclair.github.com/col.html
-[d2]: http://github.com/gsinclair/col#README
+[home]: http://gsinclair.github.com/col.html
+[code]: http://github.com/gsinclair/col
 
 ### Future plans
 
 Hopefully nothing in the code will need to change.  Bug fixes will be released
 as version 1.0.1, 1.0.2 etc.  If any requests are made for enhanced
 functionality, they will be 1.1.0, 1.2.0 etc.
+
+One possible area of enhancement is to provide a way of disabling colored output
+when outputing to a pipe.

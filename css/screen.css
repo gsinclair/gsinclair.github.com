@@ -39,11 +39,12 @@ h2 {
 }
 
 p {
-  margin: 1em 0;
+  margin-top: 1em;
 }
 
 a {
   color: #00a;
+  text-decoration: none;
 }
 
 a:hover {
@@ -51,7 +52,7 @@ a:hover {
 }
 
 a:visited {
-  color: #a0a;
+  color: #00a;
 }
 
 table {
@@ -60,6 +61,7 @@ table {
 }
 
 pre {
+  margin-top: 1em;
   margin-left: 2em;
 }
 
@@ -71,7 +73,11 @@ pre, code {
 
 li {
   margin-left: 1em;
-  margin-top: 0.5ex;
+  margin-top: 0.4ex;
+}
+
+li p {
+  margin-top: 0.3ex;
 }
 
 blockquote {
@@ -85,6 +91,7 @@ blockquote {
   blockquote li {
     margin-top: 0.2ex;
   }
+
 
 /*****************************************************************************/
 /*
