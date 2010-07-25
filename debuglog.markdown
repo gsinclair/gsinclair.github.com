@@ -220,10 +220,10 @@ Final note: if you specify a file that is not writable, an error
 ### Motivation
 
 Debugging to a log file is very useful, even if your program doesn't do
-"logging" as such.  Ages ago I released `dev-utils/debug` which did this and
+"logging" as such.  In 2004 I released `dev-utils/debug` which did this and
 intended to do more.  That's outdated now, only working on 1.8, so a revisit was
-worthwhile with a better name.  (If anyone wants the old name for something
-else, they're welcome to it.)
+worthwhile with a better name.  (If anyone wants the name `dev-utils`, they're
+welcome to it.)
 
 ### Dependencies and requirements
 
