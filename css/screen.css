@@ -129,28 +129,33 @@ ul.posts {
 }
 
 .title {
-  color: #a00;
-  font-weight: bold;
+  color: #4682B4;
+  font-weight: normal;
   margin-bottom: 2em;
+  padding-left: 1em;
+  background-color: #ebebeb;
 }
 
   .site .title a {
-    color: #a00;
+    color: #4682B4;
+    font-weight: normal;
     text-decoration: none;
+    padding-right: 1ex;
   }
 
   .site .title a:hover {
-    color: black;
+    color: #6495ED;
   }
 
   .site .title a.extra {
-    color: #aaa;
+    color: #4682B4;
     text-decoration: none;
+    font-weight: bold;
     margin-left: 1em;
   }
 
   .site .title a.extra:hover {
-    color: black;
+    color: #6495ED;
   }
 
   .site .meta {
