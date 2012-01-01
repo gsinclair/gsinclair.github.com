@@ -9,7 +9,7 @@ title: Whitestone
 > genuine; declare the truth of, in words or writing, esp. affirm in an official
 > capacity: _to whitestone the truth of a statement_.
 
-That's what I _wanted_ to call it, but the name 'whitestone' was taken.  So here's
+That's what I _wanted_ to call it, but the name 'attest' was taken.  So here's
 another definition:
 
 > **whitestone** (n.) a nice word that happens to contain the substring 'test'.
