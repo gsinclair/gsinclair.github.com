@@ -163,6 +163,10 @@ ul.posts {
     color: #aaa;
   }
 
+  .site .highlight pre {
+    font-size: 95%;
+  }
+
   .site .footer {
     font-size: 80%;
     color: #666;
