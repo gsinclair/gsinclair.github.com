@@ -1,5 +1,12 @@
+echo "*** COL ***"
 diff col.markdown ../col/doc/col.markdown
 echo
 echo --------
 echo
+echo "*** DEBUGLOG ***"
+diff debuglog.markdown ../debuglog/doc/debuglog.markdown
+echo
+echo --------
+echo
+echo "*** WHITESTONE ***"
 diff whitestone.markdown ../whitestone/doc/whitestone.markdown
